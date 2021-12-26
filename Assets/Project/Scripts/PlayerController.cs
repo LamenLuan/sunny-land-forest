@@ -22,13 +22,14 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer(float horizontalMove)
     {
-        // Changing player sprite direction if horizontalMove changed
-        if(horizontalMove != 0) _spriteRenderer.flipX = horizontalMove < 0;
+        if (horizontalMove != 0) {
+            // Changing player sprite direction if horizontalMove changed
+            _spriteRenderer.flipX = horizontalMove < 0;
 
+            float y = _rigidBody.velocity.y;
+            _rigidBody.velocity = new Vector2(horizontalMove * _speed, y);
+        }
         _animator.SetBool("IsWalking", _rigidBody.velocity.x != 0);
-        
-        float y = _rigidBody.velocity.y;
-        _rigidBody.velocity = new Vector2(horizontalMove * _speed, y);
     }
 
 }
