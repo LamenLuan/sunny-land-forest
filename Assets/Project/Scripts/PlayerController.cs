@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
             _groundCheck.position,
             1 << LayerMask.NameToLayer("Ground")
         );
+        if(_isGrounded) _numberOfJumps = 0;
     }
 
     private void UpdateSprite()
@@ -61,7 +62,8 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(_isGrounded) {
+        if(_numberOfJumps < _maxJumps) {
+            _numberOfJumps++;
             _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
             _isGrounded = false;
         }

@@ -742,7 +742,7 @@ Tilemap:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753053187}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Tiles:
   - first: {x: -38, y: -8, z: 0}
     second:
@@ -17483,7 +17483,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1977147966
 CapsuleCollider2D:
