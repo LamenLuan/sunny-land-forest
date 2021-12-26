@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("IsWalking", isWalking);
         _animator.SetBool("IsGrounded", _isGrounded);
         _animator.SetBool("IsJumping", !_isGrounded);
+        _animator.SetFloat("Y", transform.position.y);
     }
 
     private void PlayerMove(float horizontalMove)
