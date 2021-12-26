@@ -1,34 +1,71 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float _touchRun;
-    private bool _isGrounded;
-    [SerializeField] private float _speed;
-    [SerializeField] private Transform _groundCheck;
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
+    // Walk
+    private float _touchRun;
+    [SerializeField] private float _speed;
+    
+    // Jump
+    private const int _maxJumps = 2;
+    private bool _isGrounded, _isJumping;
+    private int _numberOfJumps;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private Transform _groundCheck;
+
     void Update()
     {
+        CheckIfGrounded();
         _touchRun = Input.GetAxisRaw("Horizontal");
+        if( Input.GetButtonDown("Jump") ) _isJumping = true;
+        UpdateSprite();
     }
 
     void FixedUpdate()
     {
-        MovePlayer(_touchRun);
+        PlayerMove(_touchRun);
+        if(_isJumping) PlayerJump();
     }
 
-    private void MovePlayer(float horizontalMove)
+    private void CheckIfGrounded()
+    {
+        _isGrounded = Physics2D.Linecast(
+            transform.position,
+            _groundCheck.position,
+            1 << LayerMask.NameToLayer("Ground")
+        );
+    }
+
+    private void UpdateSprite()
+    {
+        bool isWalking = ((int)_rigidBody.velocity.x) != 0 && _isGrounded;
+
+        _animator.SetBool("IsWalking", isWalking);
+        _animator.SetBool("IsGrounded", _isGrounded);
+        _animator.SetBool("IsJumping", !_isGrounded);
+    }
+
+    private void PlayerMove(float horizontalMove)
     {
         // Changing player sprite direction if horizontalMove changed
         if (horizontalMove != 0) _spriteRenderer.flipX = horizontalMove < 0;
 
-        _animator.SetBool("IsWalking", ((int)_rigidBody.velocity.x) != 0);
-
         float y = _rigidBody.velocity.y;
         _rigidBody.velocity = new Vector2(horizontalMove * _speed, y);
+    }
+
+    private void PlayerJump()
+    {
+        if(_isGrounded) {
+            _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
+            _isGrounded = false;
+        }
+        _isJumping = false;
     }
 
 }
