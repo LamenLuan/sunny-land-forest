@@ -2,6 +2,7 @@
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameController gameController; 
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed;
     
     // Jump
-    private const int _maxJumps = 2;
+    private const int MAX_JUMPS = 2;
     private bool _isGrounded, _isJumping;
     private int _numberOfJumps;
     [SerializeField] private float _jumpForce;
@@ -29,6 +30,17 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMove(_touchRun);
         if(_isJumping) PlayerJump();
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        switch (collider.gameObject.tag)
+        {
+            case "Colectable":
+                Destroy(collider.gameObject);
+                gameController.Score++;
+            break;
+        }
     }
 
     private void CheckIfGrounded()
@@ -62,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(_numberOfJumps < _maxJumps) {
+        if(_numberOfJumps < MAX_JUMPS) {
             _numberOfJumps++;
             _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
             _isGrounded = false;
