@@ -3,7 +3,7 @@
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private float _offsetX, _smoothness,
-    _upLimit, _downLimit, _leftLimit, _rightLimit;
+        _upLimit, _downLimit, _leftLimit, _rightLimit;
     [SerializeField] private Transform _playerTransform;
     private float _playerX, _playerY;
 

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private AudioController _audioController;
     [SerializeField] private Text _scoreTxt;
     private int _score;
 
@@ -13,5 +14,11 @@ public class GameController : MonoBehaviour
             _scoreTxt.text = _score.ToString("D4");
         }
     }
-    
+
+    public void GetCollectable()
+    {
+        Score++;
+        _audioController.PlayScoreAudio();
+    }
+
 }

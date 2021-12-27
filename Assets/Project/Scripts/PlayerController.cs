@@ -2,7 +2,8 @@
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameController gameController; 
+    [SerializeField] private GameController _gameController;
+    [SerializeField] private AudioController _audioController;
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             case "Colectable":
                 Destroy(collider.gameObject);
-                gameController.Score++;
+                _gameController.GetCollectable();
             break;
         }
     }
@@ -60,7 +61,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("IsWalking", isWalking);
         _animator.SetBool("IsGrounded", _isGrounded);
         _animator.SetBool("IsJumping", !_isGrounded);
-        _animator.SetFloat("Y", transform.position.y);
     }
 
     private void PlayerMove(float horizontalMove)
@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         if(_numberOfJumps < MAX_JUMPS) {
             _numberOfJumps++;
             _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
+            _audioController.PlayJumpAudio();
             _isGrounded = false;
         }
         _isJumping = false;
