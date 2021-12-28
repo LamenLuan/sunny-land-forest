@@ -6,7 +6,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private AudioController _audioController;
     [SerializeField] private Text _scoreTxt;
     [SerializeField] private GameObject _explosionPrefab;
+    [SerializeField] private Image _lifePointsImage;
+    [SerializeField] private Sprite[] _livePointsSprites;
     private int _score;
+    private byte _lifes = 3;
 
     public void GetCollectable()
     {
