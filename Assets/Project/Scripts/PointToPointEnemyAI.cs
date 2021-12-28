@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-public class SlugAI : MonoBehaviour
+public class PointToPointEnemyAI : MonoBehaviour
 {
     [SerializeField] private Transform _transform, _startPoint, _endPoint;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
     private bool _goingToEnd  = true;
 
@@ -18,7 +17,7 @@ public class SlugAI : MonoBehaviour
     void Update()
     {
         if( HasValidPoints() ) {
-            MoveSlug();
+            Move();
             if( _transform.position == TargetPosition() ) {
                 _goingToEnd = !_goingToEnd;
                 _spriteRenderer.flipX = !_spriteRenderer.flipX;
@@ -35,7 +34,7 @@ public class SlugAI : MonoBehaviour
         return _goingToEnd ? _endPoint.position : _startPoint.position;
     }
 
-    private void MoveSlug()
+    private void Move()
     {
         _transform.position = Vector3.MoveTowards(
             _transform.position,
