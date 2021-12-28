@@ -110,7 +110,6 @@ MonoBehaviour:
   _startPoint: {fileID: 9196133809888717792}
   _endPoint: {fileID: 4339174571340298804}
   _spriteRenderer: {fileID: 3437762096825363865}
-  _animator: {fileID: 3437762096825363864}
   _speed: 4
 --- !u!1 &3437762096825363871
 GameObject:
@@ -125,7 +124,7 @@ GameObject:
   - component: {fileID: 3437762096825363864}
   - component: {fileID: 3437762096825363867}
   - component: {fileID: 3651077012421162564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SlugBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

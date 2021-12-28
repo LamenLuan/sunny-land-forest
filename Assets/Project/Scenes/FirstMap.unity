@@ -19504,7 +19504,7 @@ GameObject:
   - component: {fileID: 1977147962}
   - component: {fileID: 1977147965}
   - component: {fileID: 1977147966}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19650,7 +19650,7 @@ MonoBehaviour:
   _rigidBody: {fileID: 1977147965}
   _spriteRenderer: {fileID: 1977147963}
   _speed: 5
-  _jumpForce: 600
+  _jumpForce: 500
   _groundCheck: {fileID: 560838316}
 --- !u!1 &2011682513
 GameObject:
@@ -19964,6 +19964,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 214591674}
     m_Modifications:
+    - target: {fileID: 6056286622801473303, guid: de5ec3716959f2241b981eb8544b3079,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056286622801473308, guid: de5ec3716959f2241b981eb8544b3079,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056286622801473308, guid: de5ec3716959f2241b981eb8544b3079,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6056286624775838949, guid: de5ec3716959f2241b981eb8544b3079,
         type: 3}
       propertyPath: m_Name
