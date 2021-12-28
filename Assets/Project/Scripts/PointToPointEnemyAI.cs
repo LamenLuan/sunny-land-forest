@@ -5,7 +5,7 @@ public class PointToPointEnemyAI : MonoBehaviour
     [SerializeField] private Transform _transform, _startPoint, _endPoint;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private float _speed;
-    private bool _goingToEnd  = true;
+    private bool _goingToEnd = true;
 
     void Start()
     {

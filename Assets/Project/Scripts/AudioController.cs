@@ -3,7 +3,8 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _scoreAudio, _jumpAudio;
+    [SerializeField] private AudioClip _scoreAudio, _jumpAudio,
+        _enemyDeathAudio;
 
     private void PlayOneShotAudio(AudioClip audio)
     {
@@ -18,5 +19,10 @@ public class AudioController : MonoBehaviour
     public void PlayJumpAudio()
     {
         PlayOneShotAudio(_jumpAudio);
+    }
+
+    public void PlayEnemyDeathAudio()
+    {
+        PlayOneShotAudio(_enemyDeathAudio);
     }
 }

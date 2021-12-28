@@ -40,8 +40,19 @@ public class PlayerController : MonoBehaviour
             case "Colectable":
                 Destroy(collider.gameObject);
                 _gameController.GetCollectable();
-            break;
+                break;
+            case "Enemy":
+                _gameController.DestroyEnemy(collider);
+                Jump();
+                break;
         }
+    }
+
+    private void Jump()
+    {
+        // Reseting y velocity to have independent jumps in double jumps
+        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0);
+        _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
     }
 
     private void CheckIfGrounded()
@@ -76,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         if(_numberOfJumps < MAX_JUMPS) {
             _numberOfJumps++;
-            _rigidBody.AddForce( new Vector2(0f, _jumpForce) );
+            Jump();
             _audioController.PlayJumpAudio();
             _isGrounded = false;
         }
