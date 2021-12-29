@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    public const byte MAX_LIFE_POINTS = 3;
+    private byte _lifePoints = MAX_LIFE_POINTS;
+    private bool _intangible;
 
     // Walk
     private float _touchRun;
@@ -18,6 +22,17 @@ public class PlayerController : MonoBehaviour
     private int _numberOfJumps;
     [SerializeField] private float _jumpForce;
     [SerializeField] private Transform _groundCheck;
+
+    public byte LifePoints
+    {
+        get => _lifePoints;
+        set {
+            if(value >= 0 && value <= MAX_LIFE_POINTS) {
+                _lifePoints = value;
+                _gameController.UpdateLifePointsHud(_lifePoints);
+            }
+        }
+    }
 
     void Update()
     {
@@ -33,18 +48,45 @@ public class PlayerController : MonoBehaviour
         if(_isJumping) PlayerJump();
     }
 
+    // Runs before OnCollisionEnter2D()
     void OnTriggerEnter2D(Collider2D collider)
     {
-        switch (collider.gameObject.tag)
+        GameObject gameObject = collider.gameObject;
+        switch (gameObject.tag)
         {
-            case "Colectable":
-                Destroy(collider.gameObject);
-                _gameController.GetCollectable();
-                break;
-            case "Enemy":
-                _gameController.DestroyEnemy(collider);
-                Jump();
-                break;
+            case "Colectable": DealWithCollectable(gameObject); break;
+            case "Enemy": DealWithEnemyCollider(gameObject); break;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy": CheckIfHurtOrDead(); break;
+        }
+    }
+
+    private void DealWithCollectable(GameObject collectable)
+    {
+        Destroy(collectable);
+        _gameController.GetCollectable();
+    }
+
+    private void DealWithEnemyCollider(GameObject enemy)
+    {
+        if(!_isGrounded) {
+            _gameController.DestroyEnemy(enemy);
+            Jump();
+        }
+    }
+
+    private void CheckIfHurtOrDead()
+    {
+        if(!_intangible) {
+            LifePoints--;
+            if (_lifePoints == 0) print("Morri");
+            else StartCoroutine( IntangibleEffect() );
         }
     }
 
@@ -92,6 +134,28 @@ public class PlayerController : MonoBehaviour
             _isGrounded = false;
         }
         _isJumping = false;
+    }
+
+    IEnumerator DamageTakenEffect()
+    {
+        _spriteRenderer.color = new Color(1, 0, 0, 0.8f);
+        yield return new WaitForSeconds(0.2f);
+    }
+
+    IEnumerator IntangibleEffect()
+    {   
+        Color[] colors = { new Color(1, 1, 1, 0.3f), new Color(1, 1, 1) };
+
+        _intangible = true;
+        yield return DamageTakenEffect();
+
+        // 18x 0.1s iterations results in 1.8s intangible animation
+        for (int i = 0; i < 18; i++)
+        {
+            _spriteRenderer.color = colors[i % 2 == 0 ? 0 : 1];
+            yield return new WaitForSeconds(0.1f);
+        }
+        _intangible = false;
     }
 
 }

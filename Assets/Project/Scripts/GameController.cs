@@ -7,9 +7,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text _scoreTxt;
     [SerializeField] private GameObject _explosionPrefab;
     [SerializeField] private Image _lifePointsImage;
-    [SerializeField] private Sprite[] _livePointsSprites;
+    [SerializeField] private Sprite[] _lifePointsSprites;
     private int _score;
-    private byte _lifes = 3;
 
     public void GetCollectable()
     {
@@ -18,10 +17,10 @@ public class GameController : MonoBehaviour
         _audioController.PlayScoreAudio();
     }
 
-    private GameObject CreateExplosion(Collider2D colider, Transform parent)
+    private GameObject CreateExplosion(GameObject gameObject, Transform parent)
     {
-        Vector3 position = colider.transform.position;
-        Quaternion rotation = colider.transform.localRotation;
+        Vector3 position = gameObject.transform.position;
+        Quaternion rotation = gameObject.transform.localRotation;
         return Instantiate(_explosionPrefab, position, rotation, parent);
     }
 
@@ -32,13 +31,19 @@ public class GameController : MonoBehaviour
         return controller.animationClips[0].length * 0.9f;
     }
 
-    public void DestroyEnemy(Collider2D collider)
+    public void DestroyEnemy(GameObject enemy)
     {
-        GameObject parentObj = collider.transform.parent.gameObject;
-        GameObject explosion = CreateExplosion(collider, parentObj.transform);
+        GameObject parentObj = enemy.transform.parent.gameObject;
+        GameObject explosion = CreateExplosion(enemy, parentObj.transform);
         _audioController.PlayEnemyDeathAudio();
-        Destroy(collider.gameObject);
+        Destroy(enemy);
         Destroy( parentObj, GetAnimationLength(_explosionPrefab) );
+    }
+
+    public void UpdateLifePointsHud(byte lifePoints)
+    {
+        int index = PlayerController.MAX_LIFE_POINTS - lifePoints;
+        _lifePointsImage.sprite = _lifePointsSprites[index];
     }
 
 }
