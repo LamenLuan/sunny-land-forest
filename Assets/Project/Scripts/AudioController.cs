@@ -4,7 +4,7 @@ public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _scoreAudio, _jumpAudio,
-        _enemyDeathAudio;
+        _enemyDeathAudio, _playerDeathAudio, _playerHurtAudio;
 
     private void PlayOneShotAudio(AudioClip audio)
     {
@@ -24,5 +24,15 @@ public class AudioController : MonoBehaviour
     public void PlayEnemyDeathAudio()
     {
         PlayOneShotAudio(_enemyDeathAudio);
+    }
+
+    public void PlayPlayerHurtAudio()
+    {
+        PlayOneShotAudio(_playerHurtAudio);
+    }
+
+    public void PlayPlayerDeathAudio()
+    {
+        PlayOneShotAudio(_playerDeathAudio);
     }
 }

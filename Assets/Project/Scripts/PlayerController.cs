@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public const byte MAX_LIFE_POINTS = 3;
     private byte _lifePoints = MAX_LIFE_POINTS;
-    private bool _intangible;
+    private bool _intangible, _dead;
 
     // Walk
     private float _touchRun;
@@ -36,10 +36,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CheckIfGrounded();
-        _touchRun = Input.GetAxisRaw("Horizontal");
-        if( Input.GetButtonDown("Jump") ) _isJumping = true;
-        UpdateSprite();
+        if(!_dead) {
+            CheckIfGrounded();
+            _touchRun = Input.GetAxisRaw("Horizontal");
+            if (Input.GetButtonDown("Jump")) _isJumping = true;
+            UpdateSprite();
+        }
     }
 
     void FixedUpdate()
@@ -67,6 +69,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnBecameInvisible()
+    {
+        if(gameObject.activeInHierarchy) Destroy(gameObject);
+    }
+
     private void DealWithCollectable(GameObject collectable)
     {
         Destroy(collectable);
@@ -85,9 +92,27 @@ public class PlayerController : MonoBehaviour
     {
         if(!_intangible) {
             LifePoints--;
-            if (_lifePoints == 0) print("Morri");
+            _audioController.PlayPlayerHurtAudio();
+            if (_lifePoints == 0) Die();
             else StartCoroutine( IntangibleEffect() );
         }
+    }
+
+    private void Die()
+    {
+        _audioController.PlayPlayerDeathAudio();
+        SetDeadAnimation();
+        _dead = true;
+        _gameController.Invoke("ReloadLevel", 4f);
+    }
+
+    private void SetDeadAnimation()
+    {
+        Collider2D collider = gameObject.GetComponent<Collider2D>();
+        Jump();
+        collider.enabled = false;
+        _animator.SetBool("IsJumping", false);
+        _animator.SetBool("IsDead", true);
     }
 
     private void Jump()

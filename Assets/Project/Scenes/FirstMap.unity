@@ -17387,7 +17387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.029318184, y: 0.84847474}
   m_AnchorMax: {x: 0.2272727, y: 0.91700006}
-  m_AnchoredPosition: {x: 1, y: 0.2130127}
+  m_AnchoredPosition: {x: 0.9998779, y: 0.2130127}
   m_SizeDelta: {x: 1, y: 0.375}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1172004521
@@ -19714,6 +19714,8 @@ MonoBehaviour:
   _scoreAudio: {fileID: 8300000, guid: bda643d5d8dbf4b4a9543810da715b23, type: 3}
   _jumpAudio: {fileID: 8300000, guid: f3fd060277150a844896cf9946c79685, type: 3}
   _enemyDeathAudio: {fileID: 8300000, guid: 0d20a00e0c4a6a24c81dc356f6ba796f, type: 3}
+  _playerDeathAudio: {fileID: 8300000, guid: e3ccd364e4d12614783cb6c37b38c8fc, type: 3}
+  _playerHurtAudio: {fileID: 8300000, guid: af67c2cfd641e1c4d9fae95f343c9a6d, type: 3}
 --- !u!1 &1746609813
 GameObject:
   m_ObjectHideFlags: 0
