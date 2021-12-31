@@ -152,8 +152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scenesController: {fileID: 282125905}
-  _pressButtonTxt: {fileID: 1217136778}
-  _buttonTransitionspeed: 0.8
 --- !u!4 &282125904
 Transform:
   m_ObjectHideFlags: 0
@@ -181,6 +179,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7f14fcbc6d8ec4499023c609a40c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &352973904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 352973905}
+  - component: {fileID: 352973908}
+  - component: {fileID: 352973907}
+  - component: {fileID: 352973906}
+  m_Layer: 5
+  m_Name: FadeImg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &352973905
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352973904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 508156556}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &352973906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352973904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &352973907
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352973904}
+  m_CullTransparentMesh: 0
+--- !u!114 &352973908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352973904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2dce1bf5dcfe94297933648ed582a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeImg: {fileID: 352973906}
+  _initialColor: {r: 0, g: 0, b: 0, a: 1}
+  _finalColor: {r: 0, g: 0, b: 0, a: 0}
+  _duration: 2
 --- !u!1 &397851002
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +441,7 @@ RectTransform:
   - {fileID: 1526408362}
   - {fileID: 1217136777}
   - {fileID: 397851003}
+  - {fileID: 352973905}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -516,6 +606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1217136777}
+  - component: {fileID: 1217136781}
   - component: {fileID: 1217136779}
   - component: {fileID: 1217136778}
   - component: {fileID: 1217136780}
@@ -601,6 +692,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0.2264151, g: 0.1385404, b: 0.02669989, a: 1}
   m_EffectDistance: {x: 3.76, y: -3.36}
   m_UseGraphicAlpha: 1
+--- !u!114 &1217136781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217136776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a3fdc4c1d4c964a8f0d50f0dacff65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 1217136778}
+  _transitionSpeed: 1
+  _increaseSpeed: 0.7
 --- !u!1 &1526408361
 GameObject:
   m_ObjectHideFlags: 0
