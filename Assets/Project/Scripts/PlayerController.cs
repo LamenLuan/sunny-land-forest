@@ -36,12 +36,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(!_dead) {
-            CheckIfGrounded();
-            _touchRun = Input.GetAxisRaw("Horizontal");
-            if (Input.GetButtonDown("Jump")) _isJumping = true;
-            UpdateSprite();
-        }
+        if(_dead) return;
+
+        CheckIfGrounded();
+        _touchRun = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonDown("Jump")) _isJumping = true;
+        UpdateSprite();
     }
 
     void FixedUpdate()
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject gameObject = collider.gameObject;
-        switch (gameObject.tag)
+        switch(gameObject.tag)
         {
             case "Colectable": DealWithCollectable(gameObject); break;
             case "Enemy": DealWithEnemyCollider(gameObject); break;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        switch (collision.gameObject.tag)
+        switch(collision.gameObject.tag)
         {
             case "Enemy": CheckIfHurtOrDead(); break;
         }
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         _audioController.PlayPlayerDeathAudio();
         SetDeadAnimation();
         _dead = true;
-        _gameController.Invoke("ReloadLevel", 4f);
+        _gameController.ReloadLevel(4f);
     }
 
     private void SetDeadAnimation()

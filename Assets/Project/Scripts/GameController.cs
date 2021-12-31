@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private AudioController _audioController;
+    [SerializeField] private ScenesController _scenesController;
     [SerializeField] private Text _scoreTxt;
     [SerializeField] private GameObject _explosionPrefab;
     [SerializeField] private Image _lifePointsImage;
@@ -47,8 +48,8 @@ public class GameController : MonoBehaviour
         _lifePointsImage.sprite = _lifePointsSprites[index];
     }
 
-    public void ReloadLevel()
+    public void ReloadLevel(float seconds)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _scenesController.Invoke("ReloadScene", seconds);
     }
 }
