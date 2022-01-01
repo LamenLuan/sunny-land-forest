@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private AudioController _audioController;
-    [SerializeField] private ScenesController _scenesController;
     [SerializeField] private Text _scoreTxt;
     [SerializeField] private GameObject _explosionPrefab;
     [SerializeField] private Image _lifePointsImage;
@@ -50,6 +48,7 @@ public class GameController : MonoBehaviour
 
     public void ReloadLevel(float seconds)
     {
-        _scenesController.Invoke("ReloadScene", seconds);
+        var scenesController = GetComponent<ScenesController>();
+        scenesController.Invoke("ReloadScene", seconds);
     }
 }

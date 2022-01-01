@@ -2,12 +2,11 @@
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private ScenesController _scenesController;
-
     void Update()
     {
         if( Input.GetKeyDown(KeyCode.Return) ) {
-            _scenesController.LoadFirstLevel();
+            var scenesController = GetComponent<ScenesController>();
+            scenesController.LoadFirstLevel();
         }
     }
 }

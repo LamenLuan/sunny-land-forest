@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _scoreAudio, _jumpAudio,
         _enemyDeathAudio, _playerDeathAudio, _playerHurtAudio;
 
     private void PlayOneShotAudio(AudioClip audio)
     {
-        if(audio != null) _audioSource.PlayOneShot(audio);
+        var audioSource = GetComponent<AudioSource>();
+        if(audio != null) audioSource.PlayOneShot(audio);
     }
 
     public void PlayScoreAudio()
