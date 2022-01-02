@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private ParticleSystem _dustParticle;
     public const byte MAX_LIFE_POINTS = 3;
     private byte _lifePoints = MAX_LIFE_POINTS;
     private bool _intangible, _dead;
@@ -47,11 +48,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         PlayerMove(_touchRun);
-        if(_isJumping) PlayerJump();
+        CheckJump();
     }
 
-    // Runs before OnCollisionEnter2D()
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerEnter2D(Collider2D collider) // Before OnCollisionEnter2D()
     {
         GameObject gameObject = collider.gameObject;
         switch(gameObject.tag)
@@ -124,27 +124,43 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIfGrounded()
     {
-        _isGrounded = Physics2D.Linecast(
+        bool isGrounded = Physics2D.Linecast(
             transform.position,
             _groundCheck.position,
             1 << LayerMask.NameToLayer("Ground")
         );
-        if(_isGrounded) _numberOfJumps = 0;
+        if(isGrounded && !_isGrounded) {
+            _isGrounded = true;
+            _numberOfJumps = 0;
+            _dustParticle.Play();
+        }
+    }
+
+    private bool IsWalking()
+    {
+        return ((int)_rigidBody.velocity.x) != 0 && _isGrounded;
     }
 
     private void UpdateSprite()
     {
-        bool isWalking = ((int)_rigidBody.velocity.x) != 0 && _isGrounded;
-
-        _animator.SetBool("IsWalking", isWalking);
+        _animator.SetBool( "IsWalking", IsWalking() );
         _animator.SetBool("IsGrounded", _isGrounded);
         _animator.SetBool("IsJumping", !_isGrounded);
+    }
+
+    private void FlipPlayer(float move)
+    {
+        Vector3 scale = transform.localScale;
+        transform.localScale = new Vector3(move < 0 ? -1 : 1, scale.y, scale.z);
     }
 
     private void PlayerMove(float horizontalMove)
     {
         // Changing player sprite direction if horizontalMove changed
-        if (horizontalMove != 0) _spriteRenderer.flipX = horizontalMove < 0;
+        if (horizontalMove != 0) {
+            FlipPlayer(horizontalMove);
+            if( IsWalking() ) _dustParticle.Play();
+        }
 
         float y = _rigidBody.velocity.y;
         _rigidBody.velocity = new Vector2(horizontalMove * _speed, y);
@@ -152,12 +168,17 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(_numberOfJumps < MAX_JUMPS) {
-            _numberOfJumps++;
-            Jump();
-            _audioController.PlayJumpAudio();
-            _isGrounded = false;
-        }
+        _dustParticle.Play();
+        _audioController.PlayJumpAudio();
+        _numberOfJumps++;
+        Jump();
+        _isGrounded = false;
+    }
+
+    private void CheckJump()
+    {
+        if(!_isJumping) return;
+        if(_numberOfJumps < MAX_JUMPS) PlayerJump();
         _isJumping = false;
     }
 
