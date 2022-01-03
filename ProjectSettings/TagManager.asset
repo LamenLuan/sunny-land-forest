@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Colectable
   - Enemy
-  - EnemyWeakSpot
   - Platform
+  - Projectile
+  - Harmfull
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem _dustParticle;
     public const byte MAX_LIFE_POINTS = 3;
     private byte _lifePoints = MAX_LIFE_POINTS;
-    private bool _intangible, _dead;
+    private bool _intangible, _dead, _loseControl;
 
     // Walk
     private float _touchRun;
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(_loseControl) return;
         PlayerMove(_touchRun);
         CheckJump();
     }
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         GameObject gameObject = collider.gameObject;
         switch(gameObject.tag)
         {
+            case "Harmfull": DealWithHarmfullTile(); break;
             case "Colectable": DealWithCollectable(gameObject); break;
             case "Enemy": DealWithEnemyCollider(gameObject); break;
         }
@@ -63,15 +66,24 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        switch(collision.gameObject.tag)
+        GameObject gameObject = collision.gameObject;
+        switch(gameObject.tag)
         {
-            case "Enemy": CheckIfHurtOrDead(); break;
+            case "Enemy": GetDamage(); break;
+            case "Projectile": DealWithProjectile(gameObject); break;
         }
     }
 
     void OnBecameInvisible()
     {
-        if(gameObject.activeInHierarchy) Destroy(gameObject);
+        gameObject.SetActive(false);
+        _gameController.ReloadLevel(4f);
+    }
+
+    private void DealWithHarmfullTile()
+    {
+        if(!_intangible) Jump();
+        GetDamage();
     }
 
     private void DealWithCollectable(GameObject collectable)
@@ -82,13 +94,17 @@ public class PlayerController : MonoBehaviour
 
     private void DealWithEnemyCollider(GameObject enemy)
     {
-        if(!_isGrounded) {
-            _gameController.DestroyEnemy(enemy);
-            Jump();
-        }
+        if(_isGrounded) return;
+        Jump();
+        _gameController.DestroyEnemy(enemy);
     }
 
-    private void CheckIfHurtOrDead()
+    private void DealWithProjectile(GameObject projectile) {
+        _gameController.DestroyEnemy(projectile);
+        GetDamage();
+    }
+
+    private void GetDamage()
     {
         if(!_intangible) {
             LifePoints--;
@@ -203,5 +219,4 @@ public class PlayerController : MonoBehaviour
         }
         _intangible = false;
     }
-
 }
