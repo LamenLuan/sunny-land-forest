@@ -25,8 +25,7 @@ public abstract class PointToPointAI : MonoBehaviour
     }
 
     protected bool HasValidPoints() {
-        return _transform != null &&
-            _startPoint.position.x != _endPoint.position.x;
+        return _transform != null && _startPoint.position != _endPoint.position;
     }
 
     protected Vector3 TargetPosition() {
