@@ -5,6 +5,13 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip _scoreAudio, _jumpAudio,
         _enemyDeathAudio, _playerDeathAudio, _playerHurtAudio;
 
+    public static AudioController _instance;
+
+    void Awake()
+    {
+        _instance = this;
+    }
+
     private void PlayOneShotAudio(AudioClip audio)
     {
         var audioSource = GetComponent<AudioSource>();

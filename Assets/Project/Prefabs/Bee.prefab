@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8949109429177186152}
+  - component: {fileID: 6288783291221531907}
   - component: {fileID: 8949109429177186156}
   - component: {fileID: 8949109429177186155}
   - component: {fileID: 8949109429177186154}
   - component: {fileID: 8949109429177186153}
   m_Layer: 10
   m_Name: BeeBody
-  m_TagString: Projectile
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,6 +35,25 @@ Transform:
   m_Father: {fileID: 8949109430380219268}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6288783291221531907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949109429177186151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1df01fb23c4cf34095f88a3ed9de12f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 8949109429177186152}
+  _startPoint: {fileID: 8949109430226203897}
+  _endPoint: {fileID: 8949109430534692017}
+  _speed: 6
+  _explosionPrefab: {fileID: 7155084129853786483, guid: 1ec6a6a522d0a6541972ed3b3023cac7,
+    type: 3}
+  _audioController: {fileID: 0}
 --- !u!212 &8949109429177186156
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,7 +133,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.026194692, y: -0.08294976}
@@ -179,7 +199,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8949109430380219268}
-  - component: {fileID: 298717650151805219}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -204,22 +223,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &298717650151805219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8949109430380219267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ee7b3513f3ed542acce1a17c84a51b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transform: {fileID: 8949109429177186152}
-  _startPoint: {fileID: 8949109430226203897}
-  _endPoint: {fileID: 8949109430534692017}
-  _speed: 6
 --- !u!1 &8949109430534692016
 GameObject:
   m_ObjectHideFlags: 0

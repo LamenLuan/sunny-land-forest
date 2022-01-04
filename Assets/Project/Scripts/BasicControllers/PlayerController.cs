@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public float JumpForce { get => _jumpForce; }
+    public bool IsGrounded { get => _isGrounded; }
+
     void Update()
     {
         if(_dead) return;
@@ -60,24 +63,13 @@ public class PlayerController : MonoBehaviour
         {
             case "Harmfull": DealWithHarmfullTile(); break;
             case "Colectable": DealWithCollectable(gameObject); break;
-            case "Enemy": DealWithEnemyCollider(gameObject); break;
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        GameObject gameObject = collision.gameObject;
-        switch(gameObject.tag)
-        {
-            case "Enemy": GetDamage(); break;
-            case "Projectile": DealWithProjectile(gameObject); break;
         }
     }
 
     void OnBecameInvisible()
     {
         gameObject.SetActive(false);
-        _gameController.ReloadLevel(4f);
+        if(_gameController) _gameController.ReloadLevel(4f);
     }
 
     private void DealWithHarmfullTile()
@@ -92,19 +84,7 @@ public class PlayerController : MonoBehaviour
         _gameController.GetCollectable();
     }
 
-    private void DealWithEnemyCollider(GameObject enemy)
-    {
-        if(_isGrounded) return;
-        Jump();
-        _gameController.DestroyEnemy(enemy);
-    }
-
-    private void DealWithProjectile(GameObject projectile) {
-        _gameController.DestroyEnemy(projectile);
-        GetDamage();
-    }
-
-    private void GetDamage()
+    public void GetDamage()
     {
         if(!_intangible) {
             LifePoints--;

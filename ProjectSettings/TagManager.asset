@@ -7,7 +7,6 @@ TagManager:
   - Colectable
   - Enemy
   - Platform
-  - Projectile
   - Harmfull
   layers:
   - Default
